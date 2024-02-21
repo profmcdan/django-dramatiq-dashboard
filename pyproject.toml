@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "django-dramatiq-dashboard"
+name = "dramatiq_dashboard"
 version = "0.1.1"
 description = "Django dramatiq dashboard"
 authors = ["99q"]
