@@ -1,0 +1,104 @@
+{% extends 'dramatiq_dashboard/base.html' %}
+{% load timetags %}
+
+{% block main %}
+    <div class="mb-3">
+        <a href="{% url 'django_dramatiq_dashboard:executed_list' %}">All tasks</a> > <a
+            href="{% url 'django_dramatiq_dashboard:executed_detail' object.id %}">{{ object.id }}</a>
+    </div>
+    <div class="table-responsive table--no-card m-b-30">
+        <table class="table table-borderless table-striped table-earning">
+            <thead style="display:inline-block;">
+            <tr>
+                <th>ID</th>
+            </tr>
+            <tr>
+                <th>Actor Name</th>
+            </tr>
+            <tr>
+                <th>Queue Name</th>
+            </tr>
+            <tr>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <th>Created At</th>
+            </tr>
+            <tr>
+                <th>Updated At</th>
+            </tr>
+            <tr>
+                <th>Result</th>
+            </tr>
+
+            </thead>
+            <tbody style="display:inline-block;">
+            <tr>
+                <td>{{ object.id }}</td>
+            </tr>
+            <tr>
+                <td>{{ object.actor_name }}</td>
+            </tr>
+            <tr>
+                <td>{{ object.queue_name }}</td>
+            </tr>
+            <tr>
+                <td>{{ object.status }}</td>
+            </tr>
+            <tr>
+                <td>{{ object.created_at }}</td>
+            </tr>
+            <tr>
+                <td>{{ object.updated_at }}</td>
+            </tr>
+            <tr>
+                <td>{{ object.result }}</td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <h2 class="mb-3">Message data:</h2>
+    <div class="table-responsive table--no-card m-b-30">
+        <table class="table table-borderless table-striped table-earning">
+            <thead style="display:inline-block;">
+                <tr>
+                    <th>queue_name</th>
+                </tr>
+                <tr>
+                    <th>actor_name</th>
+                </tr>
+                <tr>
+                    <th>args</th>
+                </tr>
+                <tr>
+                    <th>kwargs</th>
+                </tr>
+                <tr>
+                    <th>options</th>
+                </tr>
+                <tr>
+                    <th>message_id</th>
+                </tr>
+                <tr>
+                    <th>message_timestamp</th>
+                </tr>
+            </thead>
+            <tbody style="display:inline-block;">
+                    {% for value in object.message %}
+                        <tr>
+                            <td>{{ value }}</td>
+                        </tr>
+                    {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <style>
+        td {
+            line-height: 1;
+            padding: 22px 40px !important;
+            width: 1240px !important;
+        }
+    </style>
+{% endblock %}

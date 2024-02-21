@@ -1,0 +1,26 @@
+{% extends 'dramatiq_dashboard/base.html' %}
+{% load getattr %}
+
+{% block main %}
+    <div class="mb-3">
+        <a href="{% url 'django_dramatiq_dashboard:task_archive' %}">Archive</a> >
+    </div>
+    <div class="table-responsive table--no-card m-b-30">
+        <table class="table table-borderless table-striped table-earning">
+            <thead>
+            <tr>
+                <th>Task ID</th>
+                <th>Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for task in latest %}
+                <tr>
+                    <td><a href="{{ task.get_absolute_url }}">{{ task.id }}</a></td>
+                    <td>{{ task|getattr:view.get_date_field }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

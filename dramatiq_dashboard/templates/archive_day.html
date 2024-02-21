@@ -1,0 +1,46 @@
+{% extends 'dramatiq_dashboard/base.html' %}
+{% load getattr %}
+
+{% block title %} {{ day }} {% endblock %}
+
+{% block main %}
+    <div class="mb-3">
+        <a href="{% url 'django_dramatiq_dashboard:task_archive' %}">Archive</a> > <a
+            href="{% url 'django_dramatiq_dashboard:task_year_archive' day.year %}"> {{ day.year }}</a> >
+        <a href="{% url 'django_dramatiq_dashboard:task_month_archive' day.year day.month %}"> {{ day.month }}</a> >
+        <a href="{% url 'django_dramatiq_dashboard:task_day_archive' day.year day.month day.day %}"> {{ day.day }} </a>
+    </div>
+    <div class="table-responsive table--no-card m-b-30">
+        <table class="table table-borderless table-striped table-earning">
+            <thead>
+            <tr>
+                <th>Task ID</th>
+                <th>Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for article in object_list %}
+                <tr>
+                    <td><a href="{% url 'django_dramatiq_dashboard:executed_detail' article.id %}">{{ article.id }}</a></td>
+                    <td>{{ article|getattr:view.get_date_field|date:"F j, Y" }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div style="display: flex; justify-content: space-between;">
+        {% if previous_day %}
+            <a href="{% url 'django_dramatiq_dashboard:task_day_archive' previous_day.year previous_day.month previous_day.day %}"
+               class="btn btn-secondary">
+                Previous Day: <span>{{ previous_day }}</span>
+            </a>
+        {% endif %}
+        {% if previous_day and next_day %}--{% endif %}
+        {% if next_day %}
+            <a href="{% url 'django_dramatiq_dashboard:task_day_archive' next_day.year next_day.month next_day.day %}"
+               class="btn" style="background-color: #333; color: white;">
+                Next Day: <span>{{ next_day }}</span>
+            </a>
+        {% endif %}
+    </div>
+{% endblock %}

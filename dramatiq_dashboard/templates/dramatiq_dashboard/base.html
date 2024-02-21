@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Title Page-->
+    {% block title %}
+        <title>Django dramatiq dashboard</title>
+    {% endblock %}
+
+    <!-- Fontfaces CSS-->
+    <link href="{% static 'dramatiq_dashboard/css/font-face.css' %}" rel="stylesheet" media="all">
+
+    <!-- Bootstrap CSS-->
+    <link href="{% static 'dramatiq_dashboard/vendor/bootstrap-4.1/bootstrap.min.css' %} " rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="{% static 'dramatiq_dashboard/css/theme.css' %} " rel="stylesheet" media="all">
+
+</head>
+
+<body class="animsition">
+<div class="">
+    <!-- PAGE CONTAINER-->
+    <div class="">
+        <!-- HEADER DESKTOP-->
+        <header class="header-desktop">
+            <div class="section__content section__content--p30">
+                <div class="container-fluid" style="display: flex; align-items: center">
+                    <div class="header-wrap">
+                        <h1>Django dramatiq dashboard</h1>
+                    </div>
+                    <div class="ml-5">
+                        <a href="{% url 'django_dramatiq_dashboard:executed_list' %}" class="btn btn-light">All
+                            tasks</a>
+                        <a href="{% url 'django_dramatiq_dashboard:task_year_archive' date.year %}"
+                           class="ml-3 btn btn-light">Year</a>
+                        <a href="{% url 'django_dramatiq_dashboard:task_month_archive' date.year date.month %}"
+                           class="ml-3 btn btn-light">Month</a>
+                        <a href="{% url 'django_dramatiq_dashboard:task_day_archive' date.year date.month date.day %}"
+                           class="ml-3 btn btn-light">Day</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- END HEADER DESKTOP-->
+
+        <!-- MAIN CONTENT-->
+        <div class="main-content">
+            <div class="section__content section__content--p30">
+                <div class="container-fluid">
+                    <div class="">
+                        <div class="">
+                            {% block main %}
+                            {% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Jquery JS-->
+<script src="{% static 'dramatiq_dashboard/vendor/jquery-3.2.1.min.js' %}"></script>
+<!-- Bootstrap JS-->
+<script src="{% static 'dramatiq_dashboard/vendor/bootstrap-4.1/popper.min.js' %} "></script>
+<script src="{% static 'dramatiq_dashboard/vendor/bootstrap-4.1/bootstrap.min.js' %}"></script>
+</body>
+
+</html>
+<!-- end document-->

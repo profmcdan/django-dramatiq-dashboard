@@ -1,0 +1,75 @@
+{% extends 'dramatiq_dashboard/base.html' %}
+{% load getattr %}
+
+{% block main %}
+
+    <div class="mb-3">
+        <a href="{% url 'django_dramatiq_dashboard:task_archive' %}">Archive</a> > <a
+            href="{% url 'django_dramatiq_dashboard:task_year_archive' year.year %}"> {{ year.year }}</a>
+    </div>
+
+    <div class="table-responsive table--no-card m-b-30">
+        <table class="table table-borderless table-striped table-earning">
+            <thead>
+            <tr>
+                <th>Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for date in date_list %}
+                <tr>
+                    <td>
+                        <a href="{% url 'django_dramatiq_dashboard:task_month_archive' date.year date.month %}">
+                            {{ date|date:"F Y" }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <div class="mb-3">
+            <h4>All tasks for {{ year|date:"Y" }}:</h4>
+        </div>
+        <div class="table-responsive table--no-card m-b-30">
+            <table class="table table-borderless table-striped table-earning">
+                <thead>
+                <tr>
+                    <th>Task ID</th>
+                    <th>Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for obj in object_list %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'django_dramatiq_dashboard:executed_detail' obj.id %}">{{ obj.id }}</a>
+                        </td>
+                        <td>
+                            {{ obj|getattr:view.get_date_field|date:"F j, Y" }}
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="mt-5" style="display: flex; justify-content: space-between;">
+        {% if previous_year %}
+            <a href="{% url 'django_dramatiq_dashboard:task_year_archive' previous_year.year %}"
+               class="btn btn-secondary">
+                Previous Year: <span>{{ previous_year|date:"Y" }}</span>
+            </a>
+        {% endif %}
+        {% if next_year %}
+            <a href="{% url 'django_dramatiq_dashboard:task_year_archive' next_year.year %}" class="btn"
+               style="background-color: #333; color: white;">
+                Next Year: <span>{{ next_year|date:"Y" }}</span>
+            </a>
+        {% endif %}
+    </div>
+{% endblock %}
